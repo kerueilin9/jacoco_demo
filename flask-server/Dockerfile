@@ -10,5 +10,8 @@ RUN apt-get update && apt-get install -y default-jdk && rm -rf /var/lib/apt/list
 
 COPY . .
 
+# 设置启动脚本权限
+RUN chmod +x startup.sh
+
 EXPOSE 5000
-CMD ["python", "app.py"]
+CMD ["./startup.sh"]

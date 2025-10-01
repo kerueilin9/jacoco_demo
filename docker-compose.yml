@@ -13,6 +13,7 @@ services:
     volumes:
       - ./jacoco:/jacoco
       - ./jacocoagent-new.jar:/jacocoagent.jar
+      - spring-classes:/spring-petclinic/build/classes # 新增共享卷
     depends_on:
       - flask
 
@@ -24,3 +25,7 @@ services:
     volumes:
       - ./jacoco:/jacoco
       - ./jacococli-new.jar:/app/jacococli.jar
+      - spring-classes:/spring-petclinic-classes # 使用共享卷
+
+volumes:
+  spring-classes: # 定义共享卷
