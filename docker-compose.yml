@@ -1,0 +1,26 @@
+version: "3.8"
+
+services:
+  spring-petclinic_1:
+    image: lidek213/spring-petclinic_for_experiment:latest
+    command: >
+      java
+      -javaagent:/jacocoagent.jar=output=tcpserver,port=6300,address=*
+      -jar /spring-petclinic/build/libs/spring-petclinic-2.6.0.jar
+    ports:
+      - "3001:8080" # Petclinic UI
+      - "6300:6300" # JaCoCo TCP server
+    volumes:
+      - ./jacoco:/jacoco
+      - ./jacocoagent-new.jar:/jacocoagent.jar
+    depends_on:
+      - flask
+
+  flask:
+    build: ./flask-server
+    container_name: flask-server
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./jacoco:/jacoco
+      - ./jacococli-new.jar:/app/jacococli.jar
